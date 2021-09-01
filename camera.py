@@ -21,7 +21,10 @@ class VideoCamera(object):
                 cap.release()
 
         if(source != None):
-            self.vs = VideoStream(source).start()
+            print(f'Initialiazing {source}')
+            self.vs = VideoStream(source)
+
+        self.vs.start()
         self.flip = flip
         time.sleep(2.0)
 
