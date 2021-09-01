@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-capture_rate = os.getenv('CAPTURE_RATE', 3)
+capture_rate = int(os.getenv('CAPTURE_RATE', 60))
 
 lock = threading.Lock()
 
@@ -61,27 +61,26 @@ def start_stream():
 
     capture_start = timer()
     while True:
-        capture_end = int(math.floor(timer() - capture_start))
-        if capture_end >= capture_rate:
-            print('Should write a frame %0.03f' % capture_end)
-            dirPath = 'templates/'+time.strftime("%Y-%m-%d")
+        #capture_end = int(math.floor(timer() - capture_start))
+        # if capture_end >= capture_rate:
+        print('Should write a frame in %0.03ds' % capture_rate)
+        dirPath = 'templates/'+time.strftime("%Y-%m-%d")
 
-            if not os.path.isdir(dirPath):
-                print('The directory is not present. Creating a new one..')
-                os.mkdir(dirPath)
-            with lock:
-                mr = open(dirPath+'/'+time.strftime("%H-%M-%S")+".jpg", 'wb+')
-                mr.write(camera.get_frame())
-                mr.close()
-            capture_start = timer()
+        if not os.path.isdir(dirPath):
+            print('The directory is not present. Creating a new one..')
+            os.mkdir(dirPath)
+        with lock:
+            mr = open(dirPath+'/'+time.strftime("%H-%M")+".jpg", 'wb+')
+            mr.write(camera.get_frame())
+            mr.close()
+        #capture_start = timer()
+        time.sleep(capture_rate)
 
 
 @app.on_event("startup")
 async def startup_event():
     t = threading.Thread(target=start_stream, )
     t.start()
-    #p = Process(target=start_stream)
-    # p.start()
 
 
 @app.on_event("shutdown")
