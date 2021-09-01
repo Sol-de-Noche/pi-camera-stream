@@ -14,6 +14,8 @@ class VideoCamera(object):
     def __init__(self, flip=False):
         source = 0
         if (os.getenv("APP_LOCAL", None) == 'devel'):
+            print(
+                'Initializing in development mode looking for cameras other than default')
             for camera_idx in range(20):
                 cap = cv2.VideoCapture(camera_idx)
                 if cap.isOpened():
