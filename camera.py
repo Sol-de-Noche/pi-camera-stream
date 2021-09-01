@@ -7,18 +7,20 @@ from imutils.video import VideoStream
 import imutils
 import time
 import numpy as np
+import os
 
 
 class VideoCamera(object):
     def __init__(self, flip=False):
-        source = None
-        for camera_idx in range(20):
-            cap = cv2.VideoCapture(camera_idx)
-            if cap.isOpened():
-                if(camera_idx != 0):
-                    print(f'Camera index available: {camera_idx}')
-                    source = camera_idx
-                cap.release()
+        source = 0
+        if (os.getenv("APP_LOCAL", None) == 'devel'):
+            for camera_idx in range(20):
+                cap = cv2.VideoCapture(camera_idx)
+                if cap.isOpened():
+                    if(camera_idx != 0):
+                        print(f'Camera index available: {camera_idx}')
+                        source = camera_idx
+                    cap.release()
 
         if(source != None):
             print(f'Initialiazing {source}')

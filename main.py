@@ -5,9 +5,12 @@
 # import the necessary packages
 from flask import Flask, render_template, Response, request
 from camera import VideoCamera
+from dotenv import load_dotenv
 import time
 import threading
 import os
+
+load_dotenv()
 
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
