@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "pi-camera-stream-flask"
+version = "0.1.0"
+description = ""
+authors = [
+    "smartbuilds.io",
+    "Diego Andrés Ramírez Aragón <lowfill@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Flask = "^2.0.1"
+numpy = ">=1.9.0"
+opencv-python = "^4.5.3"
+opencv-contrib-python = "^4.5.3"
+imutils = "^0.5.4"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.5.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
