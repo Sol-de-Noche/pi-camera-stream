@@ -30,6 +30,8 @@ templates = Jinja2Templates(directory="templates")
 
 camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
+t = None
+
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
@@ -76,5 +78,12 @@ def start_stream():
 
 @app.on_event("startup")
 async def startup_event():
-    p = Process(target=start_stream)
-    p.start()
+    t = threading.Thread(target=start_stream, )
+    t.start()
+    #p = Process(target=start_stream)
+    # p.start()
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    t.stop()
