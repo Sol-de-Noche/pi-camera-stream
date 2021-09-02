@@ -1,0 +1,51 @@
+{
+  "name": "pi-camera-stream",
+  "version": "1.0.0",
+  "description": "Raspberry PI Camera Streamer",
+  "main": "index.js",
+  "repository": "git@github.com:Sol-de-Noche/pi-camera-stream.git",
+  "author": "Diego Andrés Ramírez Aragón <dramirezaragon@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "axios": "^0.21.1",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-pwa": "^4.5.12",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
