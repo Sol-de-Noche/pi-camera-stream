@@ -65,13 +65,11 @@ t = None
 
 def rec_walk(dir):
     files = []
-    contents = os.listdir(dir)  # read the contents of dir
-    for item in contents:      # loop over those contents
+    contents = os.listdir(dir)
+    for item in contents:
         if os.path.isdir(dir+'/'+item):
-            # recurse on subdirectories
             files.extend(rec_walk(dir+'/'+item))
         else:
-            print(dir+'/'+item)
             files.append(dir+'/'+item)
     return files
 
