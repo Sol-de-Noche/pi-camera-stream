@@ -7,7 +7,7 @@ authors = [
     "Diego Andrés Ramírez Aragón <lowfill@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
 fastapi = "^0.65.2"
 numpy = ">=1.9.0"
 opencv-python = "^4.5.3"
