@@ -55,6 +55,17 @@ class Client {
     }
     return {};
   }
+  async getVideos() {
+    try {
+      var response = await axios.get("/api/videos");
+      if (response.status == 200) {
+        return response.data.videos;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return {};
+  }
 }
 
 export default Client;

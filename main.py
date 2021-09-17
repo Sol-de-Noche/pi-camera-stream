@@ -31,6 +31,10 @@ class ImagesType(BaseModel):
     images: List[str] = []
 
 
+class VideosType(BaseModel):
+    videos: List[str] = []
+
+
 origins = [
     "http://localhost",
     "http://localhost:8080",
@@ -38,7 +42,8 @@ origins = [
 
 
 capture_rate = int(os.getenv('CAPTURE_RATE', 60))
-basePath = os.getenv('CAPTURE_DIR', 'recording')
+recordingsPath = os.getenv('CAPTURE_DIR', 'recording')
+videosPath = os.getenv('VIDEO_DIR', 'videos')
 
 lock = threading.Lock()
 
@@ -92,7 +97,7 @@ def start_stream():
     while True:
         if recording:
             print('Should write a frame in %0.03ds' % capture_rate)
-            dirPath = basePath+"/"+time.strftime("%Y-%m-%d")
+            dirPath = recordingsPath+"/"+time.strftime("%Y-%m-%d")
 
             if not os.path.isdir(dirPath):
                 print('The directory is not present. Creating a new one..')
@@ -119,8 +124,13 @@ async def status(status: StatusType):
 
 @api.get("/images", response_model=ImagesType)
 async def images():
-    response = ImagesType(images=rec_walk(basePath))
+    response = ImagesType(images=rec_walk(recordingsPath))
+    return response
 
+
+@api.get("/videos", response_model=VideosType)
+async def videos():
+    response = VideosType(videos=rec_walk(videosPath))
     return response
 
 app.mount("/api", api)
@@ -130,7 +140,8 @@ app.mount("/css", StaticFiles(directory="dist/css"), name="static")
 app.mount("/img", StaticFiles(directory="dist/img"), name="static")
 app.mount("/js", StaticFiles(directory="dist/js"), name="static")
 app.mount("/fonts", StaticFiles(directory="dist/fonts"), name="static")
-app.mount("/recording", StaticFiles(directory=basePath), name="static")
+app.mount("/recording", StaticFiles(directory=recordingsPath), name="static")
+app.mount("/videos", StaticFiles(directory=videosPath), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
