@@ -1,62 +1,72 @@
 # Make you own Raspberry Pi Camera Stream
 
-Create your own live stream from a Raspberry Pi using the Pi camera module. Build your own applications from here.
+Create your own live stream from a Raspberry Pi using any camera attached to it. Build your own applications from here.
 
 ## How it works
-The Pi streams the output of the camera module over the web via Flask. Devices connected to the same network would be able to access the camera stream via
+
+The Pi streams the output of the camera module over the web. Devices connected to the same network would be able to access the camera stream via
 
 ```
-<raspberry_pi_ip:5000> 
+<raspberry_pi_ip:8023>
 ```
 
 ## Screenshots
+
 | ![Setup](readme/pi-stream-client.jpg) | ![Live Pi Camera Stream](readme/pi-stream-screen-capture.jpg) |
-|---|---|
-| Pi Setup | Pi - Live Stream |
+| ------------------------------------- | ------------------------------------------------------------- |
+| Pi Setup                              | Pi - Live Stream                                              |
 
 ## Preconditions
 
-* Raspberry Pi 4, 2GB is recommended for optimal performance. However you can use a Pi 3 or older, you may see a increase in latency.
-* Raspberry Pi 4 Camera Module or Pi HQ Camera Module (Newer version)
-* Python 3 recommended.
+- Raspberry Pi 4, 2GB is recommended for optimal performance. However you can use a Pi 3 or older, you may see a increase in latency.
+- Python 3 recommended.
 
 ## Library dependencies
+
 Install the following dependencies to create camera stream.
 
 ```
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get upgrade
 
 sudo apt-get install libatlas-base-dev
 sudo apt-get install libjasper-dev
-sudo apt-get install libqtgui4 
+sudo apt-get install libqtgui4
 sudo apt-get install libqt4-test
 sudo apt-get install libhdf5-dev
 
-sudo pip3 install flask
-sudo pip3 install numpy
-sudo pip3 install opencv-contrib-python
-sudo pip3 install imutils
-sudo pip3 install opencv-python
-
-
 ```
 
-pip3 install opencv-python
-
 ## Step 1 – Cloning Raspberry Pi Camera Stream
-Open up terminal and clone the Camera Stream repo:
+
+In your Raspberry PI, Open up terminal and clone the Camera Stream repo:
 
 ```
 cd /home/pi
-git clone https://github.com/EbenKouao/pi-camera-stream-flask.git
+git clone https://github.com/Sol-de-Noche/pi-camera-stream.git
+```
+
+## Step 2 - Setup dependencies
+
+To install the python dependencies, please first setup [Poetry](https://python-poetry.org/) and then
+
+```
+poetry install
+```
+
+To install JavaScript dependencies use [Yarn](https://yarnpkg.com/)
+
+```
+yarn
 ```
 
 ## Step 2 – Launch Web Stream
 
 Note: Creating an Autostart of the main.py script is recommended to keep the stream running on bootup.
-```bash cd modules
-sudo python3 /home/pi/pi-camera-stream-flask/main.py
+
+```bash
+./build.sh
+./run.sh
 ```
 
 ## Step 3 – Autostart your Pi Stream
@@ -70,12 +80,16 @@ sudo nano /etc/profile
 Go the end of the and add the following (from above):
 
 ```
-sudo python3 /home/pi/pi-camera-stream-flask/main.py
+sudo python3 /home/pi/pi-camera-stream/run.sh
 ```
 
-This would cause the following terminal command to auto-start each time the Raspberry Pi boots up. This in effect creates a headless setup - which would be accessed via SSH. 
+This would cause the following terminal command to auto-start each time the Raspberry Pi boots up. This in effect creates a headless setup - which would be accessed via SSH.
 Note: make sure SSH is enabled.
 
-## Download Beta image of Raspberry Pi Camera Stream
-Any troubles installing, try out the already compiled Raspberry Pi (Raspbian OS) Image of [Raspberry Pi Camera Stream](https://smartbuilds.io).
-![Raspbian Camera Stream Image](img/readme/[].png)
+## Step 4 - Setup Video Generation
+
+Add the following line to your crontab configuration:
+
+```bash
+0 * * * * /home/pi/pi-camera-stream/gen_videos.sh
+```
