@@ -1,10 +1,11 @@
 #!/bin/bash
 
 mkdir -p videos
-BASE_DIR=`dirname $0`
+BASE_DIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 TARGET_DIR=$BASE_DIR'/videos/'
 echo $TARGET_DIR
 
+cd $BASE_DIR
 for directory in recording/*; do
     dirname=`basename $directory`
     video_name=$dirname'.mp4'
@@ -15,3 +16,4 @@ for directory in recording/*; do
     rm files.txt
     cd -
 done;
+cd -
