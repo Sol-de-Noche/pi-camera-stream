@@ -60,7 +60,11 @@ To install JavaScript dependencies use [Yarn](https://yarnpkg.com/)
 yarn
 ```
 
-## Step 2 – Launch Web Stream
+## Step 2 – Configure it
+
+Copy `.env.example` to `.env` and change the configuration options as it fits better for your case.
+
+## Step 3 – Launch Web Stream
 
 Note: Creating an Autostart of the main.py script is recommended to keep the stream running on bootup.
 
@@ -69,7 +73,7 @@ Note: Creating an Autostart of the main.py script is recommended to keep the str
 ./run.sh
 ```
 
-## Step 3 – Autostart your Pi Stream
+## Step 4 – Autostart your Pi Stream
 
 Optional: A good idea is to make the the camera stream auto start at bootup of your pi. You will now not need to re-run the script every time you want to create the stream. You can do this by going editing the /etc/profile to:
 
@@ -86,7 +90,7 @@ sudo python3 /home/pi/pi-camera-stream/run.sh
 This would cause the following terminal command to auto-start each time the Raspberry Pi boots up. This in effect creates a headless setup - which would be accessed via SSH.
 Note: make sure SSH is enabled.
 
-## Step 4 - Setup Video Generation
+## Step 5 - Setup Video Generation
 
 Add the following line to your crontab configuration:
 
