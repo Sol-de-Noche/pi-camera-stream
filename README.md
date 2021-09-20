@@ -97,3 +97,25 @@ Add the following line to your crontab configuration:
 ```bash
 0 * * * * /home/pi/pi-camera-stream/gen_videos.sh
 ```
+
+## Extra configurations
+
+- Create a image of your current installation
+
+```
+sudo dd bs=4M if=/dev/<Device NAme> of=/home/username/MyImage.img
+```
+
+- To enable automatic connection to your local network place a file called `wpa_supplicant.conf` in the root partition with the following content (change the configuration for your local settings)
+
+```
+country=<Insert 2 letter ISO 3166-1 country code here>
+update_config=1
+
+network={
+ ssid="<Name of your wireless LAN>"
+ psk="<Password for your wireless LAN>"
+}
+```
+
+- To enable `ssh` to your RaspberryPi create a empty file called `ssh` in the root partition
