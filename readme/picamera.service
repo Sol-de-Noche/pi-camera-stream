@@ -1,0 +1,12 @@
+[Unit]
+Description=Pi Camera Web Server
+AssertPathExists=/home/pi/pi-camera-stream
+
+[Service]
+Type=simple
+ExecStart=/home/pi/pi-camera-stream/run.sh
+KillMode-process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

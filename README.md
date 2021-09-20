@@ -75,7 +75,29 @@ Note: Creating an Autostart of the main.py script is recommended to keep the str
 
 ## Step 4 – Autostart your Pi Stream
 
-Optional: A good idea is to make the the camera stream auto start at bootup of your pi. You will now not need to re-run the script every time you want to create the stream. You can do this by going editing the /etc/profile to:
+### SystemD
+
+The most production-ready way to run this service, is via systemd. There is a sample config file in the docs directory.
+
+There a couple modifications that need to be done:
+
+```
+vim docs/picamera.service
+```
+
+Modify the _AssertPathExists_ variable to point to your location of the pi-camera-stream repo
+
+Once these modifications are done, save the file.
+
+```
+sudo cp docs/picamera.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now picamera
+```
+
+### Profile Script
+
+If you are not a fan of running this via systemd, you can do this by going editing the /etc/profile to:
 
 ```
 sudo nano /etc/profile
@@ -84,7 +106,7 @@ sudo nano /etc/profile
 Go the end of the and add the following (from above):
 
 ```
-sudo python3 /home/pi/pi-camera-stream/run.sh
+sudo /home/pi/pi-camera-stream/run.sh
 ```
 
 This would cause the following terminal command to auto-start each time the Raspberry Pi boots up. This in effect creates a headless setup - which would be accessed via SSH.
@@ -95,7 +117,7 @@ Note: make sure SSH is enabled.
 Add the following line to your crontab configuration:
 
 ```bash
-0 * * * * /home/pi/pi-camera-stream/gen_videos.sh
+0 0 * * * /home/pi/pi-camera-stream/gen_videos.sh
 ```
 
 ## Extra configurations
