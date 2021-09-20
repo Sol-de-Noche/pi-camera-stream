@@ -11,7 +11,7 @@ for directory in recording/*; do
     echo $directory
     cd $directory
     ls *.jpg | sed "s/^/file '/;s/$/'/" > files.txt
-    ffmpeg -f concat -i files.txt $TARGET_DIR$video_name
+    ffmpeg -y -f concat -i files.txt $TARGET_DIR$video_name
     rm files.txt
     cd -
 done;

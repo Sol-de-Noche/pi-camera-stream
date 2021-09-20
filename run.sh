@@ -1,8 +1,6 @@
 #!/bin/bash
 
 mkdir -p recording
-poetry install
-yarn
+mkdir -p videos
 
-yarn build
 poetry run uvicorn main:app --host 0.0.0.0 --port 8023
