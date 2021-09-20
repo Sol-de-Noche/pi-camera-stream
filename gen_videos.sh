@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p videos
-BASE_DIR=`pwd`
+BASE_DIR=`dirname $0`
 TARGET_DIR=$BASE_DIR'/videos/'
 echo $TARGET_DIR
 
