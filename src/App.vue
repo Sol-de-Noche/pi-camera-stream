@@ -159,7 +159,6 @@ export default {
     this.client = new Client(this.domain);
     this.status();
     this.loadImages();
-    this.loadVideos();
   },
   timers: {
     loadImages: { time: 1000 * 60, autostart: true, repeat: true },
@@ -199,12 +198,6 @@ export default {
       this.images = await this.client.getImages();
       this.images.sort();
 
-      await new Promise((r) => setTimeout(r, 2000));
-      this.loading = false;
-    },
-    async loadVideos() {
-      console.log("Loading videos...");
-      this.loading = true;
       await new Promise((r) => setTimeout(r, 2000));
 
       this.videos = await this.client.getVideos();
