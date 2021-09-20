@@ -44,6 +44,7 @@ origins = [
 capture_rate = int(os.getenv('CAPTURE_RATE', 60))
 recordingsPath = os.getenv('CAPTURE_DIR', 'recording')
 videosPath = os.getenv('VIDEO_DIR', 'videos')
+recording = os.getenv('RECORD_IN_STARTUP', True)
 
 lock = threading.Lock()
 
@@ -62,8 +63,6 @@ api.add_middleware(
 templates = Jinja2Templates(directory="dist")
 
 camera = VideoCamera(flip=False)  # flip pi camera if upside down.
-
-recording = False
 
 t = None
 
@@ -156,12 +155,10 @@ async def video_feed():
 
 @app.on_event("startup")
 async def startup_event():
-    print('Do nothing')
     t = threading.Thread(target=start_stream, )
     t.start()
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    print('Do nothing')
     t.stop()
