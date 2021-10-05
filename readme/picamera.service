@@ -4,7 +4,7 @@ AssertPathExists=/home/pi/pi-camera-stream
 
 [Service]
 Type=simple
-ExecStart=/home/pi/pi-camera-stream/run.sh
+ExecStart=su - pi /home/pi/pi-camera-stream/run.sh
 KillMode-process
 Restart=on-failure
 
