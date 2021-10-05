@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Picasa 3
+Exec=~/pi-camera-stream/run.sh
+Type=Application
+StartupNotify=true
+Icon=/usr/share/icons/Humanity/categories/48/applications-mail.svg
+Name[en_US]=PiCamera
