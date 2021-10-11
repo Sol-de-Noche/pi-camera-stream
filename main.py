@@ -127,6 +127,15 @@ async def images():
     return response
 
 
+@api.delete("/images", response_model=ImagesType)
+async def delete_images(images: List[str]):
+    for image in images:
+        if os.path.exists(image):
+            os.remove(image)
+    response = ImagesType(images=rec_walk(recordingsPath))
+    return response
+
+
 @api.get("/videos", response_model=VideosType)
 async def videos():
     response = VideosType(videos=rec_walk(videosPath))
