@@ -79,6 +79,15 @@
         </ul>
       </div>
       <div :class="'columns is-multiline ' + displayImages">
+        <div class="column is-1 is-offset-11 has-text-right">
+          <button
+            class="button is-dark"
+            :disabled="!deletingImages"
+            @click="deleteImages"
+          >
+            <span class="icon is-small"><i class="fas fa-trash"></i></span>
+          </button>
+        </div>
         <div
           class="column is-one-fifth"
           v-for="(image, index) in images"
@@ -86,7 +95,24 @@
         >
           <figure class="image">
             <img :src="domain + image" :title="image" />
+            <input
+              type="checkbox"
+              name="imagesToDelete[]"
+              class="delete-images"
+              :value="image"
+              :title="'Delete: ' + image"
+              @change="selectImagesToDelete"
+            />
           </figure>
+        </div>
+        <div class="column is-1 is-offset-11 has-text-right">
+          <button
+            class="button is-dark"
+            :disabled="!deletingImages"
+            @click="deleteImages"
+          >
+            <span class="icon is-small"><i class="fas fa-trash"></i></span>
+          </button>
         </div>
       </div>
       <div :class="'columns is-multiline ' + displayVideos">
@@ -122,6 +148,7 @@ export default {
       showVideos: false,
       images: [],
       videos: [],
+      imagesToDelete: [],
     };
   },
   computed: {
@@ -151,6 +178,9 @@ export default {
     displayVideos() {
       return !this.showVideos ? "is-hidden" : "";
     },
+    deletingImages() {
+      return this.imagesToDelete.length > 0;
+    },
   },
   mounted() {
     if (this.$root.debug) {
@@ -164,6 +194,15 @@ export default {
     loadImages: { time: 1000 * 60, autostart: true, repeat: true },
   },
   methods: {
+    selectImagesToDelete(e) {
+      var value = e.target.value;
+      var index = this.imagesToDelete.indexOf(value);
+      if (index < 0) {
+        this.imagesToDelete.push(value);
+      } else {
+        this.imagesToDelete.splice(index, 1);
+      }
+    },
     cleanName(name) {
       name = name.replace("videos/", "");
       name = name.replace(".mp4", "");
@@ -202,6 +241,23 @@ export default {
 
       this.videos = await this.client.getVideos();
       this.videos.sort();
+
+      await new Promise((r) => setTimeout(r, 2000));
+      this.loading = false;
+    },
+    async deleteImages() {
+      console.log("Delete images");
+      console.log(this.imagesToDelete);
+      this.loading = true;
+      await new Promise((r) => setTimeout(r, 2000));
+
+      this.images = await this.client.deleteImages(this.imagesToDelete);
+      this.imagesToDelete = [];
+      this.images.sort();
+
+      [...document.getElementsByClassName("delete-images")]
+        .filter((input) => input.checked)
+        .forEach((item) => (item.checked = false));
 
       await new Promise((r) => setTimeout(r, 2000));
       this.loading = false;

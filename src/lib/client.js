@@ -66,6 +66,18 @@ class Client {
     }
     return {};
   }
+
+  async deleteImages(images) {
+    try {
+      var response = await axios.delete("/api/images", { data: images });
+      if (response.status == 200) {
+        return response.data.images;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return {};
+  }
 }
 
 export default Client;
