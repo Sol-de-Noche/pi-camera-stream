@@ -8,5 +8,8 @@ POETRY=`which poetry`
 mkdir -p $RECORDING_DIR
 mkdir -p $VIDEOS_DIR
 
+# Generate videos if available
+$BASE_DIR/gen_videos.sh
+
 cd $BASE_DIR
 $POETRY run uvicorn main:app --host 0.0.0.0 --port 8023
